@@ -18,9 +18,21 @@ import CountTasks from '@/components/widgets/CountTasks.vue';
         </button>
       </label>
 
-      <CountTasks :getDados="getDados" :tasks="tasks" :title="titles" :completed="completed" :count="count" />
+      <CountTasks 
+      :getDados="getDados" 
+      :tasks="tasks" 
+      :title="titles" 
+      :completed="completed" 
+      :count="count" 
+      />
 
-      <TaskTable :getDados="getDados" :tasks="tasks" :title="titles" :completed="completed" :deletedItem="deletedItem" />
+      <TaskTable 
+      :getDados="getDados" 
+      :tasks="tasks" 
+      :title="titles" 
+      :completed="completed" 
+      :deletedItem="deletedItem" 
+      />
 
     </div>
   </main>
@@ -51,12 +63,6 @@ export default {
         this.tasks = data
         this.completed = data.map(task => task.completed);
         this.title = data.map(task => task.title);
-
-        this.completed.forEach(value => {
-
-          console.log(value);
-
-        });
 
       } catch (error) {
         console.error('Não foi possivel pegar os dados', error);

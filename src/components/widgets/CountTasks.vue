@@ -28,21 +28,13 @@ export default {
         completed: {
             type: Array
         },
-        // count: {
-        //     type: Number
-        // }
-    },
-    data() {
-        return {
-            allTasks: 0,
-        }
     },
     computed: {
         allTasks() {
             return this.tasks.length
         },
         count(){
-            return 'teste'
+            return this.tasks.filter(task => task.completed).length
         }
     },
     mounted(){
