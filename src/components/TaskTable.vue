@@ -1,12 +1,8 @@
-<script setup>
-
-</script>
-
 <template>
-    <div v-if="!tasks.length">
-        <p>Ops! Você ainda não possui nenhuma tarefa :( </p>
+    <div class="warning-no-tasks" v-if="!tasks.length">
+        <p>Oops! You don't have any tasks yet :(</p>
     </div>
-    <div class="table-tasks">
+    <div v-else class="table-tasks">
         <section v-for="task in tasks" :key="task.id" :class="{ 'task-container': true, 'completed': task.completed }">
 
             <button @click="taskWereCompleted(task.id, task.completed)">
@@ -46,15 +42,7 @@ export default {
             type: String
         }
     },
-    data() {
-        return {
-            count: 0
-        }
-    },
     methods: {
-        async CallDados() {
-            this.getDados()
-        },
         async taskWereCompleted(id, completed) {
 
             try {
@@ -75,9 +63,6 @@ export default {
             }
         },
     },
-    mounted() {
-        this.CallDados()
-    },
 }
 </script>
 
@@ -94,27 +79,80 @@ export default {
     display: flex;
     width: 100%;
     border: 1px solid;
-    padding: 6px;
+    padding: 16px;
     border-radius: 5px;
     align-items: center;
     gap: 8px;
-    margin: 0 auto 20px;
+    margin: 0 auto 30px;
     transition: .2s;
+    background: white;
+    box-shadow: 0 5px 10px 1px black;
+    animation: NewlyCreatedTask 1s;
 }
 
 .task-container p {
     display: flex;
-    width: 100%;
+    position: relative;
     max-width: 658px;
+    width: 100%;
     overflow: hidden;
 }
 
-.task-container.completed p {
-    text-decoration: line-through;
+.task-container.completed p::after {
+  content: ' ';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: black;
+  animation-name: lineThroughAnimated;
+  animation-duration: .2s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards; 
 }
 
 .task-container.completed {
     opacity: .4;
+}
+
+.warning-no-tasks{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    height: 100vh;
+}
+
+@keyframes lineThroughAnimated{
+  0%   { width : 0; }
+  100% { width: 100%; }
+}
+
+@keyframes NewlyCreatedTask {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-2deg);
+  }
+  20% {
+    transform: rotateZ(1deg);
+  }
+  25% {
+    transform: rotateZ(-1deg);
+  }
+  30% {
+    transform: rotateZ(1deg);
+  }
+  35% {
+    transform: rotateZ(-1deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
 }
 
 </style>

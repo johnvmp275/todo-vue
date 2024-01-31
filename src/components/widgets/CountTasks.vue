@@ -1,10 +1,10 @@
 <template>
     <section>
         <div>
-            Tasks created <span>{{ allTasks }}</span>
+            <strong>Tasks created <span>{{ allTasks }}</span></strong>
         </div>
         <div>
-            Completed <span>{{ count }} of {{ allTasks }}</span>
+            <strong>Completed <span>{{ countOfCompletedTasks }} of {{ allTasks }}</span></strong>
         </div>
     </section>
 </template>
@@ -33,13 +33,10 @@ export default {
         allTasks() {
             return this.tasks.length
         },
-        count(){
+        countOfCompletedTasks() {
             return this.tasks.filter(task => task.completed).length
         }
     },
-    mounted(){
-
-    }
 }
 </script>
 
@@ -49,4 +46,22 @@ section {
     justify-content: space-between;
     width: 100%;
 }
+
+strong{
+    font-size: 14px;
+    color: var(--background-orange);
+}
+
+span{
+    background: var(--background-gray-400);
+    color: white;
+    font-size: 12px;
+    width: 24px;
+    height: 19px;
+    border-radius: 25px;
+    padding: 5px 14px;
+    margin-left: 10px;
+    box-shadow: 0 5px 10px 1px black;
+}
+
 </style>

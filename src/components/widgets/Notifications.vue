@@ -1,7 +1,7 @@
 <template>
     <div class="container-message">
         <div class="notification" v-for="(notification, index) in notifications" :key="index">
-            <div class="states-task" :style="{background: notification.color}">
+            <div class="states-task" :style="{ background: notification.color }">
                 <span class="material-symbols-outlined">
                     {{ notification.icon }}
                 </span>
@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .container-message {
     position: fixed;
-    display: flex; 
+    display: flex;
     flex-direction: column-reverse;
     top: 10px;
     right: 10px;
@@ -40,10 +40,11 @@ export default {
     align-items: center;
     background: white;
     border-radius: 5px;
-    box-shadow: 0 0 5px 0 black;
-    margin-bottom: 20px;
+    box-shadow: 0 0 10px 1px black;
+    margin-top: 20px;
     gap: 8px;
     z-index: 999999999;
+    animation: NewNotification .8s;
 }
 
 .notification p {
@@ -62,5 +63,16 @@ export default {
 
 .states-task span {
     color: white;
+}
+
+@keyframes NewNotification {
+    from {
+        margin-top: -20px;
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 </style>

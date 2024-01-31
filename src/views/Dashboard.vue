@@ -2,40 +2,42 @@
 import TaskTable from '@/components/TaskTable.vue';
 import Notification from '@/components/widgets/Notifications.vue';
 import CountTasks from '@/components/widgets/CountTasks.vue';
+import Loader from '@/components/widgets/LoaderWaiting.vue';
 </script>
 
 <template>
+
+  <Loader :isloader="isloader" />
+
   <Notification :notifications="notificacoes" />
-  <main>
-    <div>
 
-      <label for="">
-        <input type="text" v-model="titles" placeholder="Add a new task">
-        <button @click="inviteTasks">
-          <span class="material-symbols-outlined">
-            library_add
-          </span>
-        </button>
-      </label>
+  <div class="table-of-tasks">
 
-      <CountTasks 
-      :getDados="getDados" 
-      :tasks="tasks" 
-      :title="titles" 
-      :completed="completed" 
-      :count="count" 
-      />
+    <label for="" :class="{ 'invalid': invalidComposition }">
+      <input type="text" v-model="titles" placeholder="Add a new task">
+      <button @click="inviteTasks">
+        <span class="material-symbols-outlined">
+          library_add
+        </span>
+      </button>
+    </label>
 
-      <TaskTable 
-      :getDados="getDados" 
-      :tasks="tasks" 
-      :title="titles" 
-      :completed="completed" 
-      :deletedItem="deletedItem" 
-      />
+    <CountTasks 
+    :getDados="getDados" 
+    :tasks="tasks" 
+    :title="titles" 
+    :completed="completed" 
+    />
 
-    </div>
-  </main>
+    <TaskTable 
+    :getDados="getDados" 
+    :tasks="tasks" 
+    :title="titles" 
+    :completed="completed" 
+    :deletedItem="deletedItem" 
+    />
+
+  </div>
 </template>
 
 <script>
@@ -49,8 +51,12 @@ export default {
       check: {},
       msg: '',
       notificacoes: [],
-      count: 0
+      isloader: false,
+      invalidComposition: false
     }
+  },
+  watch:{
+    titles: 'validateTaskFields',
   },
   methods: {
     async getDados() {
@@ -63,6 +69,8 @@ export default {
         this.tasks = data
         this.completed = data.map(task => task.completed);
         this.title = data.map(task => task.title);
+
+        this.isloader = true
 
       } catch (error) {
         console.error('Não foi possivel pegar os dados', error);
@@ -90,7 +98,7 @@ export default {
           })
 
           this.notificacoes.push({
-            msg: `A Tarefa ${this.titles} acabou de ser criada!`,
+            msg: `Task ${this.titles} has just been created!`,
             icon: 'check_circle',
             color: 'green'
           })
@@ -102,8 +110,10 @@ export default {
           this.titles = '';
           this.getDados()
         } else {
+          this.invalidComposition = true
+
           this.notificacoes.push({
-            msg: `Por favor, preencha os dados`,
+            msg: `Please fill in the field`,
             icon: 'warning',
             color: 'red'
           })
@@ -125,19 +135,24 @@ export default {
         })
 
         this.notificacoes.push({
-          msg: `A tarefa ${title} acabou de ser removida :(`,
+          msg: `Task ${title} was just removed :(`,
           icon: 'warning',
           color: 'red'
         })
 
         setTimeout(() => {
           this.notificacoes.splice(0, 1)
-        }, 3000);
+        }, 5000);
 
         this.getDados()
       } catch (error) {
         console.error('Não foi possivel deletar a tarefa', error)
       }
+    },
+    validateTaskFields(){
+     if( this.titles !== ''){
+      this.invalidComposition = false
+     }
     }
   },
   mounted() {
@@ -148,24 +163,49 @@ export default {
 
 
 <style scoped>
+
 label {
   display: flex;
   width: 100%;
   margin-bottom: 50px;
   height: 42px;
+  box-shadow: 0 5px 10px 1px black;
+  transition: .5s;
+  border-radius: 8px;
+}
+
+label.invalid{
+  border: 1.5px solid red;
+  box-shadow: 0 0 10px 0 red;
 }
 
 input {
   width: 100%;
   padding: 0 16px;
+  background: var(--background-gray-500);
+  border: none;
+  border-radius: 8px 0 0 8px;
+  color: white;
 }
 
 button {
   width: 90px;
+  border-radius: 0 8px 8px 0;
+  background: var(--background-orange);
+  color: white;
+}
+.table-of-tasks {
+  width: 100%;
+  height: 100%;
+  max-width: 736px;
+  padding: 16px;
 }
 
-div {
-  width: 100%;
-  max-width: 736px;
+::placeholder {
+  color: white;
+}
+
+::-ms-input-placeholder {
+  color: white;
 }
 </style>
