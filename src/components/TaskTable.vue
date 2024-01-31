@@ -1,17 +1,18 @@
 <template>
-    <div class="warning-no-tasks" v-if="!tasks.length">
-        <p>Oops! You don't have any tasks yet :(</p>
-    </div>
-    <div v-else class="table-tasks">
+    <div class="table-tasks">
         <section v-for="task in tasks" :key="task.id" :class="{ 'task-container': true, 'completed': task.completed }">
+
+            <div class="task-aling-left">
 
             <button @click="taskWereCompleted(task.id, task.completed)">
                 <span class="material-symbols-outlined">
-                    check_circle
+                    radio_button_unchecked
                 </span>
             </button>
 
             <p>{{ task.title }}</p>
+            
+            </div>
 
             <button @click="deletedItem(task.id, task.title)">
                 <span class="material-symbols-outlined">
@@ -46,6 +47,7 @@ export default {
         async taskWereCompleted(id, completed) {
 
             try {
+                
                 completed = !completed
 
                 const dataJson = JSON.stringify({ completed: completed })
@@ -84,10 +86,17 @@ export default {
     align-items: center;
     gap: 8px;
     margin: 0 auto 30px;
+    justify-content: space-between;
     transition: .2s;
-    background: white;
-    box-shadow: 0 5px 10px 1px black;
+    background: var(--background-white);
+    box-shadow: 0 5px 10px 1px var(--background-black);
     animation: NewlyCreatedTask 1s;
+}
+
+.task-aling-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .task-container p {
@@ -105,7 +114,7 @@ export default {
   left: 0;
   width: 100%;
   height: 1px;
-  background: black;
+  background: var(--background-black);
   animation-name: lineThroughAnimated;
   animation-duration: .2s;
   animation-timing-function: linear;
@@ -117,13 +126,9 @@ export default {
     opacity: .4;
 }
 
-.warning-no-tasks{
+button {
     display: flex;
-    justify-content: center;
     align-items: center;
-    color: white;
-    font-size: 18px;
-    height: 100vh;
 }
 
 @keyframes lineThroughAnimated{

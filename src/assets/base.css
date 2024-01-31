@@ -1,7 +1,10 @@
 :root{
     --background-gray-400: #333333;
-    --background-orange: #ea7c69;
-    --background-gray-600: #1A1A1A;
     --background-gray-500: #262626;
+    --background-gray-600: #1A1A1A;
     --background-gray-700: #0D0D0D;
+    --background-orange: #ea7c69;
+    --background-white: #FFFFFF;
+    --background-black: #000000;
+    --background-red: #FF0000;
 }

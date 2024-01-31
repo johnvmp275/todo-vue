@@ -38,9 +38,9 @@ export default {
     height: 70px;
     display: flex;
     align-items: center;
-    background: white;
+    background: var(--background-white);
     border-radius: 5px;
-    box-shadow: 0 0 10px 1px black;
+    box-shadow: 0 0 10px 1px var(--background-black);
     margin-top: 20px;
     gap: 8px;
     z-index: 999999999;
@@ -62,7 +62,7 @@ export default {
 }
 
 .states-task span {
-    color: white;
+    color: var(--background-white);
 }
 
 @keyframes NewNotification {

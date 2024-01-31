@@ -1,5 +1,5 @@
 <template>
-    <div class="loader" v-if="!isloader">
+    <div class="loader" v-if="!loaderIsActive">
         <span class="loader__element"></span>
         <span class="loader__element"></span>
         <span class="loader__element"></span>
@@ -9,7 +9,7 @@
 <script>
 export default {
     props: {
-        isloader: String
+        loaderIsActive: String
     }
 }
 </script>

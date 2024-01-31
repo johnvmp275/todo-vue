@@ -7,9 +7,9 @@ import Loader from '@/components/widgets/LoaderWaiting.vue';
 
 <template>
 
-  <Loader :isloader="isloader" />
+  <Loader :loaderIsActive="loaderIsActive" />
 
-  <Notification :notifications="notificacoes" />
+  <Notification :notifications="notifications" />
 
   <div class="table-of-tasks">
 
@@ -21,6 +21,8 @@ import Loader from '@/components/widgets/LoaderWaiting.vue';
         </span>
       </button>
     </label>
+
+    <template v-if="tasks.length">
 
     <CountTasks 
     :getDados="getDados" 
@@ -37,6 +39,14 @@ import Loader from '@/components/widgets/LoaderWaiting.vue';
     :deletedItem="deletedItem" 
     />
 
+    </template>
+
+   <template v-else>
+
+    <p class="warning-no-tasks">Oops! You don't have any tasks yet :(</p>
+
+  </template>
+
   </div>
 </template>
 
@@ -44,14 +54,14 @@ import Loader from '@/components/widgets/LoaderWaiting.vue';
 export default {
   data() {
     return {
-      tasks: {},
+      tasks: [],
       titles: '',
       title: null,
       completed: {},
       check: {},
       msg: '',
-      notificacoes: [],
-      isloader: false,
+      notifications: [],
+      loaderIsActive: false,
       invalidComposition: false
     }
   },
@@ -70,7 +80,7 @@ export default {
         this.completed = data.map(task => task.completed);
         this.title = data.map(task => task.title);
 
-        this.isloader = true
+        this.loaderIsActive = true
 
       } catch (error) {
         console.error('Não foi possivel pegar os dados', error);
@@ -97,14 +107,14 @@ export default {
             body: dataJson
           })
 
-          this.notificacoes.push({
+          this.notifications.push({
             msg: `Task ${this.titles} has just been created!`,
             icon: 'check_circle',
             color: 'green'
           })
 
           setTimeout(() => {
-            this.notificacoes.splice(0, 1)
+            this.notifications.splice(0, 1)
           }, 3000);
 
           this.titles = '';
@@ -112,14 +122,14 @@ export default {
         } else {
           this.invalidComposition = true
 
-          this.notificacoes.push({
+          this.notifications.push({
             msg: `Please fill in the field`,
             icon: 'warning',
             color: 'red'
           })
 
           setTimeout(() => {
-            this.notificacoes.splice(0, 1)
+            this.notifications.splice(0, 1)
           }, 3000);
         }
       } catch (error) {
@@ -134,14 +144,14 @@ export default {
           method: 'DELETE',
         })
 
-        this.notificacoes.push({
+        this.notifications.push({
           msg: `Task ${title} was just removed :(`,
           icon: 'warning',
           color: 'red'
         })
 
         setTimeout(() => {
-          this.notificacoes.splice(0, 1)
+          this.notifications.splice(0, 1)
         }, 5000);
 
         this.getDados()
@@ -169,14 +179,14 @@ label {
   width: 100%;
   margin-bottom: 50px;
   height: 42px;
-  box-shadow: 0 5px 10px 1px black;
+  box-shadow: 0 5px 10px 1px var(--background-black);
   transition: .5s;
   border-radius: 8px;
 }
 
 label.invalid{
-  border: 1.5px solid red;
-  box-shadow: 0 0 10px 0 red;
+  border: 1.5px solid var(--background-red);
+  box-shadow: 0 0 10px 0 var(--background-red);
 }
 
 input {
@@ -185,14 +195,14 @@ input {
   background: var(--background-gray-500);
   border: none;
   border-radius: 8px 0 0 8px;
-  color: white;
+  color: var(--background-white);
 }
 
 button {
   width: 90px;
   border-radius: 0 8px 8px 0;
   background: var(--background-orange);
-  color: white;
+  color: var(--background-white);
 }
 .table-of-tasks {
   width: 100%;
@@ -202,10 +212,19 @@ button {
 }
 
 ::placeholder {
-  color: white;
+  color: var(--background-white);
 }
 
 ::-ms-input-placeholder {
-  color: white;
+  color: var(--background-white);
+}
+
+.warning-no-tasks{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--background-white);
+    font-size: 18px;
+    height: 100vh;
 }
 </style>
