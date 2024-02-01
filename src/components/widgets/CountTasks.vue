@@ -4,14 +4,14 @@
 
       <strong>
         Tasks created <span>{{ allCreatedTasks }}</span>
-     </strong>
+      </strong>
 
     </div>
     <div>
 
       <strong>
         Completed <span>{{ countOfCompletedTasks }} of {{ allCreatedTasks }}</span>
-     </strong>
+      </strong>
 
     </div>
   </section>
@@ -20,18 +20,12 @@
 <script>
 export default {
   props: {
-    getDados: {
-      type: Function,
-    },
-    deletedItem: {
+    getDadosFromTask: {
       type: Function,
     },
     tasks: {
       type: Array,
       default: ()=>[],
-    },
-    title: {
-      type: String,
     },
     completed: {
       type: Array,
@@ -45,9 +39,6 @@ export default {
       return this.tasks.filter((task) => task.completed).length;
     },
   },
-  created(){
-    console.log(this.tasks);
-  }
 };
 </script>
 

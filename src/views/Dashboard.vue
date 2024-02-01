@@ -6,46 +6,56 @@ import Loader from '@/components/widgets/LoaderWaiting.vue';
 </script>
 
 <template>
-
   <Loader :loaderIsActive="loaderIsActive" />
 
   <Notification :notifications="notifications" />
 
   <div class="table-of-tasks">
 
-    <label for="" :class="{ 'invalid': invalidComposition }">
-      <input type="text" v-model="titles" placeholder="Add a new task">
-      <button @click="inviteTasks">
-        <span class="material-symbols-outlined">
-          library_add
-        </span>
-      </button>
+    <img src="/fav.png" alt="icone todo list">
+
+    <label for="titles" :class="{ 'invalid': invalidComposition }">
+
+        <input 
+        type="text"
+        name="titles" 
+        id="titles" 
+        v-model="titles" 
+        placeholder="Add a new task" 
+        @keydown.enter="submitTheTasks"
+        />
+
+        <button @click="submitTheTasks">
+          <span class="material-symbols-outlined">
+            library_add
+          </span>
+        </button>
+
     </label>
 
     <template v-if="tasks.length">
 
-    <CountTasks 
-    :getDados="getDados" 
-    :tasks="tasks" 
-    :title="titles" 
-    :completed="completed" 
-    />
+      <CountTasks 
+      :getDadosFromTask="getDadosFromTask" 
+      :tasks="tasks" 
+      :completed="completed" 
+      />
 
-    <TaskTable 
-    :getDados="getDados" 
-    :tasks="tasks" 
-    :title="titles" 
-    :completed="completed" 
-    :deletedItem="deletedItem" 
-    />
+      <TaskTable 
+      :getDadosFromTask="getDadosFromTask" 
+      :tasks="tasks" 
+      :title="titles" 
+      :completed="completed" 
+      :deletedTaskItem="deletedTaskItem" 
+      />
 
     </template>
 
-   <template v-else>
+    <template v-else>
 
-    <p class="warning-no-tasks">Oops! You don't have any tasks yet :(</p>
+      <p class="warning-no-tasks">Oops! You don't have any tasks yet :(</p>
 
-  </template>
+    </template>
 
   </div>
 </template>
@@ -65,11 +75,11 @@ export default {
       invalidComposition: false
     }
   },
-  watch:{
+  watch: {
     titles: 'validateTaskFields',
   },
   methods: {
-    async getDados() {
+    async getDadosFromTask() {
 
       try {
 
@@ -88,7 +98,7 @@ export default {
 
     },
 
-    async inviteTasks() {
+    async submitTheTasks() {
 
       try {
 
@@ -118,7 +128,8 @@ export default {
           }, 3000);
 
           this.titles = '';
-          this.getDados()
+          this.getDadosFromTask()
+
         } else {
           this.invalidComposition = true
 
@@ -132,11 +143,12 @@ export default {
             this.notifications.splice(0, 1)
           }, 3000);
         }
+
       } catch (error) {
         console.error('Não foi possivel enviar a tarefa', error)
       }
     },
-    async deletedItem(id, title) {
+    async deletedTaskItem(id, title) {
 
       try {
 
@@ -154,19 +166,20 @@ export default {
           this.notifications.splice(0, 1)
         }, 5000);
 
-        this.getDados()
+        this.getDadosFromTask()
+        
       } catch (error) {
         console.error('Não foi possivel deletar a tarefa', error)
       }
     },
-    validateTaskFields(){
-     if( this.titles !== ''){
-      this.invalidComposition = false
-     }
+    validateTaskFields() {
+      if (this.titles !== '') {
+        this.invalidComposition = false
+      }
     }
   },
   mounted() {
-    this.getDados()
+    this.getDadosFromTask()
   }
 }
 </script>
@@ -178,13 +191,13 @@ label {
   display: flex;
   width: 100%;
   margin-bottom: 50px;
-  height: 42px;
+  height: 50px;
   box-shadow: 0 5px 10px 1px var(--background-black);
   transition: .5s;
   border-radius: 8px;
 }
 
-label.invalid{
+label.invalid {
   border: 1.5px solid var(--background-red);
   box-shadow: 0 0 10px 0 var(--background-red);
 }
@@ -204,6 +217,7 @@ button {
   background: var(--background-orange);
   color: var(--background-white);
 }
+
 .table-of-tasks {
   width: 100%;
   height: 100%;
@@ -211,20 +225,24 @@ button {
   padding: 16px;
 }
 
-::placeholder {
+::placeholder, ::-ms-input-placeholder  {
   color: var(--background-white);
 }
 
-::-ms-input-placeholder {
+.warning-no-tasks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: var(--background-white);
+  font-size: 18px;
+  height: 100vh;
 }
 
-.warning-no-tasks{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--background-white);
-    font-size: 18px;
-    height: 100vh;
+img {
+  width: 70px;
+  display: flex;
+  margin: auto auto 40px;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px 4px var(--background-black);
 }
 </style>

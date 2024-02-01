@@ -1,14 +1,19 @@
 {
   "tasks": [
     {
-      "title": "wedwed",
-      "completed": false,
+      "title": "Arrumar o quarto",
+      "completed": true,
       "id": 1
     },
     {
-      "title": "wqsqwsqwsqwsqw",
-      "completed": false,
+      "title": "Correr",
+      "completed": true,
       "id": 2
+    },
+    {
+      "title": "Treino na Zapte",
+      "completed": true,
+      "id": 3
     }
   ]
 }
