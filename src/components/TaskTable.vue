@@ -70,9 +70,7 @@ export default {
     },
     computed: {
         findTasksForUser() {
-            return this.tasks.filter((task) => {
-                return task.title.match(this.search)
-            })
+            return this.tasks.filter((task) => task.title.match(this.search.toLowerCase()))
         }
     },
     methods: {
@@ -138,6 +136,7 @@ export default {
     display: flex;
     position: relative;
     text-overflow: ellipsis;
+    text-transform: capitalize;
 }
 
 .task-container.completed p::after {

@@ -105,7 +105,7 @@ export default {
         if (this.titles !== '') {
 
           const data = {
-            title: this.titles,
+            title: this.titles.toLowerCase(),
             completed: false
           }
 
