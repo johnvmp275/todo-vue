@@ -19,10 +19,11 @@
 
                 <button @click="taskWereCompleted(task.id, task.completed)">
 
-                    <span v-if="!task.completed" class="material-symbols-outlined">
-                        radio_button_unchecked
-                    </span>
-
+       
+                    <svg v-if="!task.completed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 50 50">
+                    <circle class="stroke" pathLength="100" cx="25" cy="25" r="20" transform="rotate(-90) scale(1 -1)" transform-origin="25 25" style="animation-delay:.1s; animation-duration:.5s;" />
+                    </svg>
+           
                     <svg v-else xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 50 50">
                     <line pathLength="100" class="stroke" x1="8.5" y1="8.5" x2="41.5" y2="41.5" />
                     <line pathLength="100" class="stroke" x1="41.5" y1="8.5" x2="8.5" y2="41.5" style="animation-delay: .5s" />
@@ -190,7 +191,7 @@ input {
   stroke: var(--background-black);
   stroke-width: 3px;
   fill: none;
-  animation: strokeAni .5s forwards 1;
+  animation: strokeAni .2s forwards 1;
 }
 
 @keyframes lineThroughAnimated {

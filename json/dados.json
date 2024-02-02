@@ -1,3 +1,34 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "title": "varrer a casa",
+      "completed": true,
+      "id": 1
+    },
+    {
+      "title": "cozinhar",
+      "completed": true,
+      "id": 2
+    },
+    {
+      "title": "tomar banho",
+      "completed": true,
+      "id": 3
+    },
+    {
+      "title": "lavar a casa",
+      "completed": true,
+      "id": 4
+    },
+    {
+      "title": "pintar a varanda",
+      "completed": true,
+      "id": 5
+    },
+    {
+      "title": "comer macarronada ",
+      "completed": true,
+      "id": 6
+    }
+  ]
 }
